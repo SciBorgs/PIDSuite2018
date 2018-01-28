@@ -98,6 +98,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
 			break;
 		case DriveStraight:
+		case DriveDistance:
 			getPIDController().setPercentTolerance(0.5);
 			setSetpoint(setPoint);
 			break;
