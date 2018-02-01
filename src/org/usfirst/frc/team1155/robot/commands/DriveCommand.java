@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
 
@@ -21,11 +22,11 @@ public class DriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(SmartDashboard.getString("Turning?", "true").toLowerCase().equals("true"))
-    		Robot.drive.pidMode = PIDMode.TurnDegree;
-    	else {
-    		Robot.drive.pidMode = PIDMode.DriveDistance;
-    	}
+    	Robot.drive.pidMode = PIDMode.DriveStraight;
+    	if(OI.driveStraightButton.get())
+    		Robot.drive.startAdjustment(0, Robot.drive.gyro.getAngle());
+    	else
+    		Robot.drive.endAdjustment();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,6 +43,7 @@ public class DriveCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drive.setSpeed(0, 0);
+    	Robot.drive.endAdjustment();
     }
 
     // Called when another command which requires one or more of the same

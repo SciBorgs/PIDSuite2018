@@ -14,12 +14,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
 	public static Joystick stick;
-	public static JoystickButton turnDegreeButton, driveDistanceButton;
+	public static JoystickButton turnDegreeButton, driveStraightButton, driveDistanceButton;
 
 	public OI() {
 		stick = new Joystick(0);
 		turnDegreeButton = new JoystickButton(stick, 3);
-		driveDistanceButton = new JoystickButton(stick, 4);
+		driveStraightButton = new JoystickButton(stick, 4);
+		driveDistanceButton = new JoystickButton(stick, 5);
 		
 		turnDegreeButton.whenPressed(new TurnToDegree());
 		driveDistanceButton.whenPressed(new DriveDistance());
