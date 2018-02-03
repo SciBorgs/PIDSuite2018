@@ -23,16 +23,17 @@ public class DriveCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.pidMode = PIDMode.DriveStraight;
-    	if(OI.driveStraightButton.get())
-    		Robot.drive.startAdjustment(0, Robot.drive.gyro.getAngle());
-    	else
-    		Robot.drive.endAdjustment();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putNumber("GyroValue", Robot.drive.gyro.getAngle());
     	Robot.drive.setSpeed(-movementStick.getY(), -movementStick.getY());
+    	
+    	if(OI.driveStraightButton.get() && !Robot.drive.getPIDController().isEnabled())
+    		Robot.drive.startAdjustment(0, Robot.drive.gyro.getAngle());
+    	else if(!OI.driveStraightButton.get() && Robot.drive.getPIDController().isEnabled())
+    		Robot.drive.endAdjustment();
     }
 
     // Make this return true when this Command no longer needs to run execute()
